@@ -1,11 +1,11 @@
-// swift-tools-version:5.2
+// swift-tools-version:5.7.0
 
 import PackageDescription
 
 let package = Package(
     name: "google-cloud",
     platforms: [
-       .macOS(.v10_15)
+       .macOS(.v13)
     ],
     products: [
         .library(
@@ -21,6 +21,9 @@ let package = Package(
             name: "CloudSecretManager",
             targets: ["CloudSecretManager"]),
         .library(
+            name: "CloudIAMServiceAccountCredentials",
+            targets: ["CloudIAMServiceAccountCredentials"]),
+        .library(
             name: "CloudTranslation",
             targets: ["CloudTranslation"]),
         .library(
@@ -29,7 +32,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
-        .package(url: "https://github.com/vapor-community/google-cloud-kit.git", .exact("1.0.0-rc.9")),
+        .package(url: "https://github.com/vapor-community/google-cloud-kit.git", from: "1.0.0-rc.11"),
     ],
     targets: [
         .target(
@@ -58,6 +61,13 @@ let package = Package(
             dependencies: [
                 .product(name: "Vapor", package: "vapor"),
                 .product(name: "GoogleCloudSecretManager", package: "google-cloud-kit"),
+                .target(name: "GoogleCloud")
+        ]),
+        .target(
+            name: "CloudIAMServiceAccountCredentials",
+            dependencies: [
+                .product(name: "Vapor", package: "vapor"),
+                .product(name: "GoogleCloudIAMServiceAccountCredentials", package: "google-cloud-kit"),
                 .target(name: "GoogleCloud")
         ]),
         .target(
